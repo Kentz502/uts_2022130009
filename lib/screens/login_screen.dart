@@ -19,11 +19,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (email.isNotEmpty && password.isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login successful for $email!')),
+        SnackBar(content: Text('Login successful for $email!'),
+        backgroundColor: Colors.green),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter both email and password.')),
+        SnackBar(content: Text('Please enter both email and password!'), 
+        backgroundColor: Colors.red),
       );
     }
   }
@@ -39,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 100,
+                width: 150,
                 height: 100,
                 color: Colors.grey[300],
                 child: Icon(Icons.image, size: 50, color: Colors.grey),
