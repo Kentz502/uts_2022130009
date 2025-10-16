@@ -20,13 +20,13 @@ class ProductScreen extends StatefulWidget {
 
   class _ProductScreenState extends State<ProductScreen> {
     int _quantity = 1;
-}
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text(widget.name),
         backgroundColor: Colors.blueAccent,
       ),
       body: SingleChildScrollView(
@@ -38,7 +38,7 @@ class ProductScreen extends StatefulWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image.network(
-                  image,
+                  widget.image,
                   height: 250,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -47,7 +47,7 @@ class ProductScreen extends StatefulWidget {
             ),
             SizedBox(height: 20),
             Text(
-              name,
+              widget.name,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -55,7 +55,7 @@ class ProductScreen extends StatefulWidget {
             ),
             SizedBox(height: 10),
             Text(
-              price,
+              widget.price,
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.grey,
@@ -109,6 +109,7 @@ class ProductScreen extends StatefulWidget {
                 ),
               ],
             ),
+            SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -123,8 +124,9 @@ class ProductScreen extends StatefulWidget {
                 icon: Icon(Icons.shopping_cart),
                 label: Text('Add to Cart'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellowAccent,
+                  backgroundColor: Colors.blueAccent,
                   padding: EdgeInsets.symmetric(vertical: 16),
+                  foregroundColor: Colors.black,
                 ),
               ),
             ),
