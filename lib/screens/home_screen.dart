@@ -1,6 +1,7 @@
 // ignore_for_file: dead_code, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:uts_2022130009/screens/product_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
         'image': 'https://picsum.photos/201'
       },
       {
-        'name': 'Watch',
+        'name': 'Smart Watch',
         'price': 'Rp 500.000',
         'image': 'https://picsum.photos/202'
       },
@@ -40,7 +41,7 @@ class HomeScreen extends StatelessWidget {
       },
       {
         'name': 'Wrist Band',
-        'price': 'Rp 30.000',
+        'price': 'Rp 15.000',
         'image': 'https://picsum.photos/206'
       },
       {
@@ -94,7 +95,16 @@ class HomeScreen extends StatelessWidget {
                   final product = products[index];
                   return GestureDetector(
                     onTap: () {
-                      // nanti aja
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductScreen(
+                            name: product['name']!,
+                            price: product['price']!,
+                            image: product['image']!,
+                          ),
+                        ),
+                      );
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -105,7 +115,8 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(12)),
                             child: Image.network(
                               product['image']!,
                               height: 120,
