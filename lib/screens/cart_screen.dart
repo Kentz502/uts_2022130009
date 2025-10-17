@@ -3,42 +3,37 @@
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  final List<Map<String, dynamic>> cartItems;
+  const CartScreen({super.key, required this.cartItems});
 
   @override
   State<CartScreen> createState() => _CartScreen();
 }
 
 class _CartScreen extends State<CartScreen> {
-  List<Map<String, dynamic>> cartItems = [
-    {"name": "Produk A", "price": 50000, "quantity": 1},
-    {"name": "Produk B", "price": 30000, "quantity": 2},
-    {"name": "Produk C", "price": 150000, "quantity": 1},
-  ];
-
   void _increaseQuantity(int index) {
     setState(() {
-      cartItems[index]['quantity']++;
+      widget.cartItems[index]['quantity']++;
     });
   }
 
   void _decreaseQuantity(int index) {
     setState(() {
-      if (cartItems[index]['quantity'] > 1) {
-        cartItems[index]['quantity']--;
+      if (widget.cartItems[index]['quantity'] > 1) {
+        widget.cartItems[index]['quantity']--;
       }
     });
   }
 
   void _removeItem(int index) {
     setState(() {
-      cartItems.removeAt(index);
+      widget.cartItems.removeAt(index);
     });
   }
 
   num _calculateTotal() {
     num total = 0;
-    for (var item in cartItems) {
+    for (var item in widget.cartItems) {
       total += item['price'] * item['quantity'];
     }
     return total;
@@ -51,7 +46,7 @@ class _CartScreen extends State<CartScreen> {
         title: Text('Cart'),
         backgroundColor: Colors.blueAccent,
       ),
-      body: cartItems.isEmpty
+      body: widget.cartItems.isEmpty
       ? Center(
         child: Text(
           'Your cart is empty',
@@ -62,9 +57,9 @@ class _CartScreen extends State<CartScreen> {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: cartItems.length,
+                itemCount: widget.cartItems.length,
                 itemBuilder: (context, index) {
-                  final item = cartItems[index];
+                  final item = widget.cartItems[index];
                   return Card(
                     margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: ListTile(

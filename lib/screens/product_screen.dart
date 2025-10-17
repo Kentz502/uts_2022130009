@@ -1,26 +1,76 @@
 // ignore_for_file: prefer_const_constructors , prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:uts_2022130009/screens/cart_screen.dart';
 
 class ProductScreen extends StatefulWidget {
   final String name;
   final String price;
   final String image;
+  final List<Map<String, dynamic>> cartItems;
 
   const ProductScreen({
     super.key,
     required this.name,
     required this.price,
     required this.image,
+    required this.cartItems,
   });
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
 }
 
-  class _ProductScreenState extends State<ProductScreen> {
-    int _quantity = 1;
+class _ProductScreenState extends State<ProductScreen> {
+  List<Map<String, dynamic>> products = [
+    {"name": "Produk A", "price": 50000},
+    {"name": "Produk B", "price": 30000},
+    {"name": "Produk C", "price": 150000},
+  ];
 
+  int _quantity = 1;
+  late List<Map<String, dynamic>> cartItems;
+
+  @override
+  void initState() {
+    super.initState();
+    cartItems = widget.cartItems;
+  }
+  void _addToCart() {
+  setState(() {
+    int index = cartItems.indexWhere((item) => item['name'] == widget.name);
+
+    int priceValue = int.tryParse(
+      widget.price.replaceAll(RegExp(r'[^0-9]'), ''),
+    ) ?? 0;
+
+    if (index >= 0) {
+      cartItems[index]['quantity']++;
+    } else {
+      cartItems.add({
+        'name': widget.name,
+        'price': priceValue,
+        'quantity': _quantity,
+      });
+    }
+  });
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => CartScreen(cartItems: cartItems),
+    ),
+  );
+}
+
+  void _goToCart() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CartScreen(cartItems: cartItems),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +78,12 @@ class ProductScreen extends StatefulWidget {
       appBar: AppBar(
         title: Text(widget.name),
         backgroundColor: Colors.blueAccent,
+        actions: [
+          IconButton(
+            onPressed: _goToCart,
+            icon: Icon(Icons.shopping_cart),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
@@ -113,20 +169,13 @@ class ProductScreen extends StatefulWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Added to Cart!"),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
-                },
+                onPressed: _addToCart,
                 icon: Icon(Icons.shopping_cart),
                 label: Text('Add to Cart'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
                   padding: EdgeInsets.symmetric(vertical: 16),
-                  foregroundColor: Colors.black,
+                  foregroundColor: Colors.white,
                 ),
               ),
             ),

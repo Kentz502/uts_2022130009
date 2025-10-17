@@ -1,6 +1,7 @@
 // ignore_for_file: dead_code, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:uts_2022130009/screens/cart_screen.dart';
 import 'package:uts_2022130009/screens/product_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -94,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final product = products[index];
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -102,9 +103,16 @@ class HomeScreen extends StatelessWidget {
                             name: product['name']!,
                             price: product['price']!,
                             image: product['image']!,
+                            cartItems: cartItems,
                           ),
                         ),
                       );
+                      if (updatedCart != null) {
+                        setState(() {
+                          cartItems = updatedCart;
+                        });
+                      }
+                    },
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(
